@@ -32,7 +32,7 @@ public class ItemControllerTest {
 
     @Test
     @DisplayName("상품 등록 페이지 권한 테스트")
-    @WithMockUser(username = "admin" , roles = "USER")
+    @WithMockUser(username = "user" , roles = "USER")
     public void itemFormNotAdminTest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/item/new"))
                 .andDo(print())
