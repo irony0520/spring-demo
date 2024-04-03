@@ -6,16 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
-import java.time.LocalDateTime;
-
 @Getter
 @Table(name="item")
 @Setter
 @ToString
 @Entity
 
-public class Item {
+public class Item extends BaseEntity{
 
 
 
@@ -36,6 +33,5 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus;
-    private LocalDateTime regTime;
-    private LocalDateTime updateTime;
+
 }
