@@ -36,7 +36,8 @@
     <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active item">
-                <img class="d-block w-100 banner" src="" alt="First slide">
+                <img class="d-block w-100 banner" src="https://previews.123rf.com/images/vectorchef/vectorchef1603/vectorchef160305078/53320150-%EC%87%BC%ED%95%91%EB%AA%B0-%EC%95%84%EC%9D%B4%EC%BD%98.jpg"
+                     alt="First slide">
             </div>
         </div>
     </div>
@@ -52,7 +53,7 @@
         <th:block th:each="item,status:${items.getContent()}">
             <div class="col-md-4 margin">
                 <div class="card">
-                    <a th:href="'/item' + ${item.id}" class="text-dark">
+                    <a th:href="'/item/' + ${item.id}" class="text-dark">
                         <img th:src="${item.imgUrl}" class="card-img-top"
                              th:alt="${item.itemNm}" height="400">
                         <div class="card-body">
@@ -66,6 +67,31 @@
                 </div>
             </div>
         </th:block>
+    </div>
+
+    <div th:with="start=${(items.number/maxPage)*maxPage+1},
+                       end=(${(items.totalPages ==0) ? 1 : (start + (maxPage -1)
+                        <items.totalPages ? start + (maxPage -1) : items.totalPages)})">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item" th:classappend="${items.number eq 0}?'disabled'">
+                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number - 1}}"
+                aria-label="Previous" class="page-link">
+                    <span aria-hidden="true">Previous</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="page:${#numbers.sequence(start, end)}"
+                th:classappend="${items.number eq page - 1}?'active':''">
+                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page - 1}}"
+                   th:inline="text" class="page-link">[[${page}]]</a>
+            </li>
+            <li class="page-item" th:classappend="${items.last} ? 'disabled'">
+                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number+1}}"
+                   aria-label="Next" class="page-link"><span aria-hidden="true">Next</span>
+                </a>
+            </li>
+        </ul>
+
     </div>
 
 

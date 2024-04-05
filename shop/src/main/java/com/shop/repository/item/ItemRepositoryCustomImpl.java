@@ -122,5 +122,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         return new PageImpl<>(content, pageable, total);
     }
 
+//    private BooleanExpression itemNmLike(String searchQuery){
+//        return StringUtils.isEmpty(searchQuery) ? null: item.itemNm.like("%"+searchQuery+"%");
+//    }
+//
 }
 

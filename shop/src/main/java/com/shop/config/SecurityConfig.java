@@ -43,7 +43,9 @@ public class SecurityConfig {
         });
 
         http.exceptionHandling((it)->it
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint("members/login")));
+
+       // http.requestCache((it) -> it.requestCache(cache));
 
 
         return http.build();
