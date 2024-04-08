@@ -3,7 +3,7 @@ package com.shop.entity;
 import com.shop.constant.ItemSellStatus;
 import com.shop.repository.MemberRepository;
 import com.shop.repository.OrderItemRepository;
-import com.shop.repository.OrderReposiroty;
+import com.shop.repository.OrderRepository;
 import com.shop.repository.item.ItemRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class OrderTest {
 
     @Autowired
-    OrderReposiroty orderReposiroty;
+    OrderRepository orderRepository;
 
     @Autowired
     ItemRepository itemRepository;
@@ -68,10 +68,10 @@ class OrderTest {
             order.getOrderItems().add(orderItem);
         }
 
-        orderReposiroty.saveAndFlush(order);
+        orderRepository.saveAndFlush(order);
         em.clear();
 
-        Order saveOrder = orderReposiroty.findById(order.getId())
+        Order saveOrder = orderRepository.findById(order.getId())
                 .orElseThrow(EntityNotFoundException::new);
         assertEquals(3,saveOrder.getOrderItems().size());
     }
@@ -94,7 +94,7 @@ class OrderTest {
         memberRepository.save(member);
 
         order.setMember(member);
-        orderReposiroty.save(order);
+        orderRepository.save(order);
         return order;
     }
 
