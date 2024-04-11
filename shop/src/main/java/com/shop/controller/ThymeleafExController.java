@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/thymeleaf")
+@RequestMapping("thymeleaf")
 public class ThymeleafExController {
 
-    @GetMapping("/ex01")
+    @GetMapping("ex01")
     public String thymeleafExample01(Model model){
         model.addAttribute("data","타임리프 예제");
         return "thymeleafEx/thymeleafEx01";
     }
 
-    @GetMapping("/ex02")
+    @GetMapping("ex02")
     public String thymeleafExample02(Model model) {
         ItemDTO itemDto = new ItemDTO();
         itemDto.setItemDetail("상품 상세 설명");
@@ -34,7 +34,7 @@ public class ThymeleafExController {
 
     }
 
-    @GetMapping("/ex03")
+    @GetMapping("ex03")
     public String thymeleafExample03(Model model){
         List<ItemDTO> itemDTOList = new ArrayList<>();
 

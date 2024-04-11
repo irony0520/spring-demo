@@ -42,4 +42,9 @@ public class Member extends BaseEntity {
         return member;
     }
 
+//    public static Member deleteMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+//
+//    }
+
+
 }

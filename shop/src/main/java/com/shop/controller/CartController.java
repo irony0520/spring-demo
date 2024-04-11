@@ -23,7 +23,7 @@ public class CartController {
 
     private final CartService cartService;
 
-    @PostMapping(value = "/cart")
+    @PostMapping(value = "cart")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto
             , BindingResult bindingResult, Principal principal) {
 
@@ -47,14 +47,14 @@ public class CartController {
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/cart")
+    @GetMapping(value = "cart")
     public String orderHist(Principal principal, Model model){
         List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
         model.addAttribute("cartItems", cartDetailList);
         return "cart/cartList";
     }
 
-    @PatchMapping("/cartItem/{cartItemId}")
+    @PatchMapping("cartItem/{cartItemId}")
     public @ResponseBody ResponseEntity updateCartItem
             (@PathVariable("cartItemId") Long cartItemId, int count, Principal principal) {
         if(count <=0) {
@@ -68,7 +68,7 @@ public class CartController {
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 
-    @DeleteMapping("/cartItem/{cartItemId}")
+    @DeleteMapping("cartItem/{cartItemId}")
     public @ResponseBody ResponseEntity deleteCartItem
             (@PathVariable("cartItemId") Long cartItemId,Principal principal){
         if(!cartService.validateCartItem(cartItemId,principal.getName())) {
@@ -78,7 +78,7 @@ public class CartController {
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 
-    @PostMapping("/cart/orders")
+    @PostMapping("cart/orders")
     public @ResponseBody ResponseEntity orderCartItem
             (@RequestBody CartOrderDto cartOrderDto, Principal principal) {
         List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();

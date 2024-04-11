@@ -31,7 +31,7 @@ public class CartService {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-
+    private final OrderService orderService;
     public Long addCart(CartItemDto cartItemDto, String email) {
 
         Item item = itemRepository.findById(cartItemDto.getItemId())
