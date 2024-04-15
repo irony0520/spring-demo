@@ -35,6 +35,7 @@ public class SecurityConfig {
             req
                     .requestMatchers(antMatcher("/")).permitAll()
                     .requestMatchers(antMatcher("/members/**")).permitAll()
+                    .requestMatchers(antMatcher("members/delete")).permitAll()
                     .requestMatchers(antMatcher("/item/**")).permitAll()
                     .requestMatchers(antMatcher("/css/**")).permitAll()
                     .requestMatchers(antMatcher("/images/**")).permitAll()
@@ -48,7 +49,13 @@ public class SecurityConfig {
        // http.requestCache((it) -> it.requestCache(cache));
 
 
+
+        // 기타 설정...
+
         return http.build();
+
+
+
     }
 
     @Bean
@@ -61,5 +68,7 @@ public class SecurityConfig {
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+
 
 }

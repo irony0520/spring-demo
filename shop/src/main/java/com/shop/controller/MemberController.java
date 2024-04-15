@@ -10,9 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/members")
 @Controller
@@ -55,5 +53,27 @@ public class MemberController {
         model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요.");
         return "member/memberLoginForm";
     }
+
+    @GetMapping("/delete")
+    public String showDeleteMember() {
+        return "member/memberDeleteForm";
+    }
+
+
+    @PostMapping("/delete")
+    public String deleteMember(@RequestParam("email") String email, Model model) {
+        Member member = memberService.findByEmail(email);
+        if (member != null) {
+            memberService.deleteMember(member);
+            model.addAttribute("message","회원탈퇴가 완료됐습니다.");
+            return "member/memberLoginForm";
+        } else {
+            model.addAttribute("deleteErrorMsg", "해당 이메일로 등록된 회원이 없습니다.");
+            return "member/memberDeleteForm";
+        }
+    }
+
+
+
 
 }

@@ -42,4 +42,20 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
+
+    public void deleteMember(Member member) {
+
+       memberRepository.delete(member);
+    }
+
+
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+//    public void validateMember2(Long id) {
+//        Member member = memberRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+//    }
 }

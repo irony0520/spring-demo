@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+    <form role="form" method="post" action="/members/delete">
+        <div class="form-group">
+            <label for="email">이메일 입력</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="이메일 입력">
+        </div>
+
+        <p th:if="${deleteErrorMsg}" class="deleteErrorMsg" th:text="${deleteErrorMsg}"></p>
+        <button type="submit" class="btn btn-primary">회원 탈퇴</button>
+        <p th:if="${message}" class="error" th:text="${message}"></p>
+        <input type="hidden" th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
+    </form>
+</div>
+
+</html>

@@ -1,7 +1,9 @@
 package com.shop.service;
 
+import com.shop.constant.Role;
 import com.shop.dto.MemberFormDto;
 import com.shop.entity.Member;
+import com.shop.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,8 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -23,6 +24,9 @@ public class MemberServiceTests {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     public Member createMember() {
         MemberFormDto memberFormDto = new MemberFormDto();
@@ -60,4 +64,23 @@ public class MemberServiceTests {
         assertEquals("이미 가입된 회원입니다.",e.getMessage());
 
     }
+
+
+    @Test
+    public void testDeleteMember() {
+        // 회원 추가
+        Member member = new Member();
+        member.setEmail("test@example.com");
+        member.setPassword("password");
+        member.setRole(Role.USER); // Assume Role enum is defined
+        memberRepository.save(member);
+
+        // 회원 삭제
+        memberService.deleteMember(member);
+
+
+    }
+
+
+
 }
