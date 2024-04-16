@@ -55,25 +55,29 @@ public class MemberController {
     }
 
     @GetMapping("/delete")
-    public String showDeleteMember() {
+    public String showDeleteMember(@RequestParam(value = "success", required = false) boolean success, Model model) {
+        if (success) {
+            model.addAttribute("message", "회원탈퇴가 완료되었습니다.");
+        }
         return "member/memberDeleteForm";
     }
-
 
     @PostMapping("/delete")
     public String deleteMember(@RequestParam("email") String email, Model model) {
         Member member = memberService.findByEmail(email);
         if (member != null) {
             memberService.deleteMember(member);
-            model.addAttribute("message","회원탈퇴가 완료됐습니다.");
-            return "member/memberLoginForm";
+            model.addAttribute("success", true); // 회원 탈퇴 성공 여부를 모델에 추가
+            return "member/memberDeleteForm";
         } else {
             model.addAttribute("deleteErrorMsg", "해당 이메일로 등록된 회원이 없습니다.");
             return "member/memberDeleteForm";
         }
     }
 
-
-
-
 }
+
+
+
+
+
