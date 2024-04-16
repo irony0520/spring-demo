@@ -33,7 +33,7 @@ public class ItemImgService {
         if (!StringUtils.isEmpty(oriImgName)) {
             imgName = fileService.uploadFile(itemImgLocation, oriImgName,
                     itemImgFile.getBytes());
-            imgUrl = "C:/shop/images/item/" + imgName;
+            imgUrl = "/images/item/" + imgName;
         }
 
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
