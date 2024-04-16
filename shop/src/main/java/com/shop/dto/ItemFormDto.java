@@ -2,6 +2,7 @@ package com.shop.dto;
 
 import com.shop.constant.ItemSellStatus;
 import com.shop.entity.Item;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -20,12 +21,14 @@ public class ItemFormDto {
     private String itemNm;
 
     @NotNull(message = "가격은 필수 입력 값입니다.")
+    @Digits(integer = 8,fraction = 3,message = "유효한 숫자를 입력해주세요.")
     private Integer price;
 
     @NotBlank(message = "상품 세부설명은 필수 입력 값입니다.")
     private String itemDetail;
 
     @NotNull(message = "재고는 필수 입력 값입니다.")
+    @Digits(integer = 8,fraction = 2,message = "유효한 숫자를 입력해주세요.")
     private Integer stockNumber;
 
     private ItemSellStatus itemSellStatus;

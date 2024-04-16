@@ -117,8 +117,11 @@
                     <div class="fs18 font-weight-light">
                         <span th:text="${orderItem.orderPrice} + '원'"></span>
                         <span th:text="${orderItem.count} + '개'"></span>
+                        <span th:text="'합계 : ' + ${orderItem.orderPrice}*${orderItem.count} + '원'"></span>
                     </div>
                 </div>
+
+
 
             </div>
         </div>
