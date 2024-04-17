@@ -24,7 +24,7 @@ public class MemberController {
         model.addAttribute("memberFormDto",new MemberFormDto());
         return "member/memberForm";
     }
-ㄹ
+
 
     //bindingResult - 스프링이 제공하는 검증 오류 보관 객체 bindingResult.hasErrors는 error유무를 판단
     @PostMapping("new")
