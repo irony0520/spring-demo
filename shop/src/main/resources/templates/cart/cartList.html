@@ -12,11 +12,14 @@
 
     <script th:inline="javascript">
 
+
+        // cartChxBox(밑에 div) 가 변경될때 getOrderTotalPrice 함수 출력
         $(document).ready(function(){
             $("input[name=cartChkBox]").change( function(){
                 getOrderTotalPrice();
             });
         });
+
 
         function getOrderTotalPrice(){
             var orderTotalPrice = 0;
