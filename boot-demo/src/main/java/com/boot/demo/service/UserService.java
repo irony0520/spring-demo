@@ -1,6 +1,7 @@
 package com.boot.demo.service;
 
 import com.boot.demo.dto.LoginDto;
+import com.boot.demo.dto.TokenRequest;
 import com.boot.demo.dto.TokenResponse;
 import com.boot.demo.dto.UserFormDto;
 import com.boot.demo.entity.RefreshToken;
@@ -75,6 +76,24 @@ public class UserService implements UserDetailsService {
 
         //3. 액세스 토큰 발급 TokenResponse(액세스 , 리프레시 토큰 둘다 반환)
         String accessToken = tokenProvider.createAccessToken(user,Duration.ofHours(2));
+        return new TokenResponse(accessToken, newRefreshToken);
+    }
+
+    public TokenResponse tokenRefresh(TokenRequest request) throws Exception{
+        if(!tokenProvider.validateToken(request.getRefreshToken())) {
+            throw new IllegalArgumentException("Unexpected Token");
+        }
+        //리프레시 토큰이 정상적인경우
+        RefreshToken refreshToken = refreshTokenService
+                .findByRefreshToken(request.getRefreshToken());
+
+        User user = refreshToken.getUser();
+
+        String accessToken = tokenProvider.createAccessToken(user, Duration.ofHours(2));
+        //토큰 두개 다 새로 생성 바뀌는 리프레시 토큰을 getRefreshToken으로 꺼내옴
+        String newRefreshToken = refreshToken.update(tokenProvider.createRefreshToken(Duration.ofDays(1))).getRefreshToken();
+
+        //2개 다 새로 갱신
         return new TokenResponse(accessToken, newRefreshToken);
     }
 }

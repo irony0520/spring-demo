@@ -30,6 +30,7 @@ public class TokenProvider {
     private final JwtProperties jwtProperties;
 
     //AccessToken 생성
+    //Duration은 token이 유효한 기간
     public String createAccessToken(User user, Duration expiredAt){
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expiredAt.toMillis());
@@ -46,6 +47,7 @@ public class TokenProvider {
                 .compact();
     }
 
+    //리프레시 토큰 생성 - 리프레시 토큰의 경우 유저의 정보가 필요가 없기때문에 간소화됨
     public String createRefreshToken(Duration expiredAt) {
     Date now = new Date();
     Date expiry = new Date(now.getTime() + expiredAt.toMillis());

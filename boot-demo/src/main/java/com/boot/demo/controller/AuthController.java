@@ -1,6 +1,8 @@
 package com.boot.demo.controller;
 
 import com.boot.demo.dto.LoginDto;
+import com.boot.demo.dto.TokenRequest;
+import com.boot.demo.dto.TokenResponse;
 import com.boot.demo.dto.UserFormDto;
 import com.boot.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -40,4 +42,13 @@ public class AuthController {
         }
     }
 
+    //새로운 리프레시 토큰을 내려주는 역할
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@Valid TokenRequest request) {
+        try{
+            return new ResponseEntity<>(userService.tokenRefresh(request),HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
 }
