@@ -1,5 +1,7 @@
 package com.boot.demo.config;
 
+import com.boot.demo.jwt.JwtAccessDeniedHandler;
+import com.boot.demo.jwt.JwtAuthenticationEntryPoint;
 import com.boot.demo.jwt.JwtFilter;
 import com.boot.demo.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,9 @@ public class SecurityConfig {
     private String frontDomain;
 
     private final TokenProvider tokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();
     }
@@ -42,9 +47,7 @@ public class SecurityConfig {
                 )
                 .csrf( csrf-> csrf.disable()
                 )
-                .logout(
-                        logout -> logout.clearAuthentication(true)
-                )
+//
                 .sessionManagement(
                         sessionManage -> sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -52,6 +55,10 @@ public class SecurityConfig {
                         //jwt필터를 이용하도록 설정
                         new JwtFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class
+                )
+                .exceptionHandling( exceptionHandler -> exceptionHandler
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
                 .authorizeHttpRequests(request -> {
                     request

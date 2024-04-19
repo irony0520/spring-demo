@@ -76,7 +76,8 @@ public class UserService implements UserDetailsService {
 
         //3. 액세스 토큰 발급 TokenResponse(액세스 , 리프레시 토큰 둘다 반환)
         String accessToken = tokenProvider.createAccessToken(user,Duration.ofHours(2));
-        return new TokenResponse(accessToken, newRefreshToken);
+        return new TokenResponse(accessToken, newRefreshToken, user.getRole().getKey());
+        //권한 추가
     }
 
     public TokenResponse tokenRefresh(TokenRequest request) throws Exception{
@@ -94,7 +95,11 @@ public class UserService implements UserDetailsService {
         String newRefreshToken = refreshToken.update(tokenProvider.createRefreshToken(Duration.ofDays(1))).getRefreshToken();
 
         //2개 다 새로 갱신
-        return new TokenResponse(accessToken, newRefreshToken);
+        return new TokenResponse(accessToken, newRefreshToken, user.getRole().getKey());
+    }
+
+    public void logout(TokenRequest request) {
+        refreshTokenService.removeToken(request.getRefreshToken());
     }
 }
 

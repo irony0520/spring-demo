@@ -1,13 +1,14 @@
 server:
   port: 8080
 
-frontDomain: "http://localhost:3000"
+#frontDomain: "http://localhost:3000"
 
 #deploy
-#frontDomain: "http://[ip]:3000"
+frontDomain: "http://13.125.173.232"
 
-dbDomain : "mysql://localhost:3306"
-dbUser : "root"
+#배포할때 유의
+dbDomain : "mysql://13.125.244.70:3306"
+dbUser : "shop"
 dbPasswd : "1234"
 
 spring:
@@ -18,7 +19,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
