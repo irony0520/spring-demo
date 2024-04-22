@@ -7,8 +7,8 @@
     <script th:inline="javascript">
         $(document).ready(function () {
             $("searchBtn").on("click", function (e) {
-                e.preventDefault();
-                page(0);
+                e.preventDefault(); //검색 버튼 클릭시 페이지가 새로고침되는걸 막음
+                page(0);  //0page 조회
             });
         });
 
@@ -17,7 +17,7 @@
             var searchSellStatus = $("#searchSellStatus").val();
             var searchBy = $("#searchBy").val();
             var searchQuery = $("#searchQuery").val();
-
+            //??
             location.href="/admin/items/" + page + "?searchDateType=" + searchDateType
                 + "&searchSellStatus=" + searchSellStatus
                 + "&searchBy=" + searchBy
@@ -47,7 +47,8 @@
             </thead>
 
             <tbody>
-            <tr th:each="item, status: ${items.getContent()}">
+<!--            slice객체의 메서드 getContent // 현재 페이지에 조회한 데이터  간단한 페이지네이션 ->slice , page가 slice를 상속함 -->
+<tr th:each="item, status: ${items.getContent()}">
                 <td th:text="${item.id}"></td>
                 <td>
                     <a th:href="'/admin/item/'+${item.id}"
@@ -56,6 +57,9 @@
                 <td th:text="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
                 <td th:text="${item.createdBy}"></td>
                 <td th:text="${item.regTime}"></td>
+<!--                ?-->
+
+<!--                model.addAttribute("item",itemFormDto);-->
             </tr>
             </tbody>
         </table>

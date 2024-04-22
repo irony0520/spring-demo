@@ -22,7 +22,9 @@ public class FileService {
                throw new RuntimeException();
            }
         }
+        //이미지 파일 서버에 등록
         FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
+        //이미지 데이터를 fileData에 넣음
         fos.write(fileData);
         fos.close();
         return savedFileName;
@@ -31,6 +33,7 @@ public class FileService {
     public void deleteFile(String filePath) throws Exception{
         File deleteFile = new File(filePath);
 
+        //java 에서 제공하는 file.delete 메소드
         if(deleteFile.exists()) {
             deleteFile.delete();
             log.info("파일이 삭제됐습니다.");

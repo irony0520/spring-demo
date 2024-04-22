@@ -28,6 +28,10 @@ public class Order extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    //orderItem의 order Order - 부모, OrderItem - 자식
+    //CascadeType.ALL 부모 엔티티의 영속 상태 변화가 자식에게 영향을 미침 -> 주문 삭제시 OrderItem에서도 삭제됨
+    //orphanRemoval = true -> 고아 객체 제거 기능 (참조하는 곳이 하나일때만 사용가능)
+    //fetch = FetchType.LAZY 지연 로딩 방식 - 즉시로딩 사용시 사용하지 않는 데이터를 가져오기 때문에 실무에서 사용힘듬
     @OneToMany(mappedBy= "order",cascade = CascadeType.ALL ,
                 orphanRemoval = true, fetch = FetchType.LAZY)
 

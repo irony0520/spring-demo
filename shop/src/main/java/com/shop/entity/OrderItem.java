@@ -11,6 +11,7 @@ import lombok.Setter;
 public class OrderItem extends BaseEntity{
 
     @Id
+    //데이터베이스에서 기본키 자동생성
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Long id;

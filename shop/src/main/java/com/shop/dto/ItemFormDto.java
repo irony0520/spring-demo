@@ -36,14 +36,18 @@ public class ItemFormDto {
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
     private static ModelMapper modelMapper = new ModelMapper();
 
+    //modelMapper를 사용해 itemFormDto 객체의 데이터를 item 엔티티로 생성
+    //즉 item엔티티로 변환된 데이터는 영속성 콘텍스트가 관리, 데이터베이스에 저장된 후에는 영속화됨
     public Item createItem() {
         return modelMapper.map(this, Item.class);
+        //itemFormDto 객체-> item 엔티티
     }
 
     public static ItemFormDto of(Item item) {
         return modelMapper.map(item, ItemFormDto.class);
+        //item엔티티 -> itemFormDto 객체
     }
-
+    //왜 이런식으로 코드를 짜는가 ? - > 데이터 전환을 용이하게 만들고 레이어 분리 코드 재사용 용이 ....... . 등등
     public List<Long> itemImgIds = new ArrayList<>();
 
 }

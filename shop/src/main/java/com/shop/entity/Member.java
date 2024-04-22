@@ -28,6 +28,7 @@ public class Member extends BaseEntity {
     private String password;
     private String address;
 
+    //enum 사용시 명시적 효과
     @Enumerated(EnumType.STRING)
     private Role role;
 
