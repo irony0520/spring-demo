@@ -23,8 +23,11 @@
 
         function getOrderTotalPrice(){
             var orderTotalPrice = 0;
+            //jquery에서 html 속성 접근할때 대괄호 사용 체크박스: 체크됨  each - 반복문 실행
             $("input[name=cartChkBox]:checked").each(function() {
+                //체크된 상품의 가격, 아이디
                 var cartItemId = $(this).val();
+                //체크된 상품의 가격, 수량
                 var price = $("#price_" + cartItemId).attr("data-price");
                 var count = $("#count_" + cartItemId).val();
                 orderTotalPrice += price*count;
@@ -34,6 +37,7 @@
         }
 
         function changeCount(obj){
+            //장바구니에 있는 상품 수량 변경
             var count = obj.value;
             var cartItemId = obj.id.split('_')[1];
             var price = $("#price_" + cartItemId).data("price");
@@ -54,9 +58,10 @@
 
         function updateCartItemCount(cartItemId, count) {
 
-            if(!confirm("삭제하시겠습니까?")) {
-             return;
-            }
+            //오류이슴 ㅠ
+            // if(!confirm("삭제하시겠습니까?")) {
+            //  return;
+            // }
 
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
@@ -129,6 +134,7 @@
                 data["cartItemId"] = cartItemId;
                 dataList.push(data);
             });
+            //paramData에 cart..속성 추가 후 배열할당
             paramData['cartOrderDtoList'] = dataList;
             var param = JSON.stringify(paramData);
 
@@ -216,6 +222,7 @@
             </thead>
             <tbody>
             <tr th:each="cartItem : ${cartItems}">
+<!--                cartController - -->
                 <td class="text-center align-middle">
                     <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
                 </td>

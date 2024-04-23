@@ -45,11 +45,14 @@ public class Order extends BaseEntity{
 
     public static Order createOrder(Member member, List<OrderItem> orderItemList){
         Order order = new Order();
+        //회원 정보 세팅
         order.setMember(member);
         for(OrderItem orderItem : orderItemList) {
             order.addOrderItem(orderItem);
         }
+        //장바구니에는 여러가지 상품이 한번에 들어가고 주문될수있기때문에 리스트 형태로 값을 받음
         order.setOrderStatus(OrderStatus.ORDER);
+        //주문 상태를 order로 세팅
         order.setOrderDate(LocalDateTime.now());
         return order;
     }

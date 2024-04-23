@@ -11,11 +11,13 @@ import java.util.List;
 
 @Getter @Setter
 public class OrderHistDto {
+    //주문 정보
     public OrderHistDto(Order order) {
         this.orderId = order.getId();
         this.orderDate =
                 order.getOrderDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.orderStatus = order.getOrderStatus();
+        //ORDER, CANCEL
     }
 
     private Long orderId;

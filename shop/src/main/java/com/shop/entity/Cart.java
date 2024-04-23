@@ -22,6 +22,7 @@ public class Cart extends BaseEntity{
     public static Cart createCart(Member member){
         Cart cart = new Cart();
         cart.setMember(member);
+        //회원 엔티티 파라미터를 받아 장바구니 엔티티 생성
         return cart;
     }
 

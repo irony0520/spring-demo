@@ -37,7 +37,7 @@ public class CartController {
         }
         String email = principal.getName();
         Long cartItemId;
-
+        //상품 장바구니에 담기
         try {
             cartItemId = cartService.addCart(cartItemDto, email);
         } catch (Exception e){
@@ -51,6 +51,7 @@ public class CartController {
     public String orderHist(Principal principal, Model model){
         List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
         model.addAttribute("cartItems", cartDetailList);
+        //cartList.html view로 전달
         return "cart/cartList";
     }
 

@@ -51,6 +51,7 @@
 
     <div class="row">
         <th:block th:each="item,status:${items.getContent()}">
+<!--            page class의 getContent - > mainItemDto-->
             <div class="col-md-4 margin">
                 <div class="card">
                     <a th:href="'/item/' + ${item.id}" class="text-dark">
@@ -82,6 +83,7 @@
             </li>
             <li class="page-item" th:each="page:${#numbers.sequence(start, end)}"
                 th:classappend="${items.number eq page - 1}?'active':''">
+<!--                thymeleaf url 표현식 @  , 페이지 번호가 0번부터 시작하기 때문에 -1 해줌-->
                 <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page - 1}}"
                    th:inline="text" class="page-link">[[${page}]]</a>
             </li>
@@ -91,6 +93,7 @@
                 </a>
             </li>
         </ul>
+<!--        number, sequence, last 는 전부 slice class-->
 
     </div>
 

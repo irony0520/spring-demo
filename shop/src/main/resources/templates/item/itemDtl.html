@@ -20,6 +20,7 @@
         function calculateTotalPrice(){
             var count = $("#count").val();
             var price = $("#price").val();
+            //밑 name이 count, price 인 값
             var totalPrice = price*count;
             $("totalPrice").html(totalPrice + '원');
         }
@@ -27,11 +28,14 @@
         function order(){
             var token=$("meta[name='_csrf']").attr("content");
             var header =$("meta[name='_csrf_header']").attr("content");
+            //post전송의 경우 crsf토큰 필요
 
             var url = "/order";
             var paramData = {
                 itemId: $("#itemId").val(),
                 count: $("#count").val()
+                //orderControll에 postMapping 위치로 order가 되어있고, orderDto에 값 저장중, orderDto의 필드 이름과 일치시키는게
+                //권장됨. 왜냐하면 서버는 post요청을 보낼때 orderDto객체를 변환해서 처리할것이기 때문에
             };
 
             var param = JSON.stringify(paramData);
@@ -73,17 +77,18 @@
 
             var param = JSON.stringify(paramData);
 
+            //ajax는 하나의 큰 jqXHr객체, http프로토콜을 이용한 비동기통신, $ajax의 리턴 타입은 jqXhr 지금은 jquery를 통해 ajax작성중
             $.ajax({
-                url: url,
-                type:"POST",
+                url: url, //요청할 매핑된 url
+                type:"POST", //기본값 get
                 contentType : "application/json",
                 data : param,
                 beforeSend: function(xhr){
                     xhr.setRequestHeader(header, token);
                 },
-                dataType: "json",
+                dataType: "json", //생략시 jquery가 mime타입을 보고 자동결정
                 cache: false,
-                success: function(result, status) {
+                success: function(result, status) { //ajax통신 성공시 콜백함수
                     alert("상품을 장바구니에 담았습니다.");
                     location.href='/';
 
@@ -134,12 +139,16 @@
 <div layout:fragment="content" style="margin-left:25%;margin-right:25%">
 
     <input type="hidden" id="itemId" th:value="${item.id}">
+<!--    먼저 controller 확인해서 model 찾기-->
         <div class="d-flex">
             <div class="repImgDiv">
                 <img th:src="${item.itemImgDtoList[0].imgUrl}"
                      class = "rounded repImg" th:alt="${item.itemNm}">
+<!--                alt = 이미지 대체 텍스트-->
+
             </div>
             <div class="wd50">
+<!--                클래스나 메서드에 접근할때 T사용-->
                 <span th:if="${item.itemSellStatus==T(com.shop.constant.ItemSellStatus).SELL}"
                       class="badge badge-primary mgb-15"> 판매중 </span>
                 <span th:unless="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}"

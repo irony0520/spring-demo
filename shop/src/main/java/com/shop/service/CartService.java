@@ -33,11 +33,12 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final OrderService orderService;
     public Long addCart(CartItemDto cartItemDto, String email) {
-
+        //장바구니에 담을 상품 엔티티 조회
         Item item = itemRepository.findById(cartItemDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
+        //email(현재 로그인한) 회원 조회
         Member member = memberRepository.findByEmail(email);
-
+        //로그인한 회원의 장바구니 조회
         Cart cart = cartRepository.findByMemberId(member.getId());
         if (cart == null) {
             cart = Cart.createCart(member);
@@ -45,7 +46,9 @@ public class CartService {
         }
 
         CartItem savedCartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
+        //현재 상품이 장바구니에 있는지 없는지 조회
 
+        //있었으면 (not null) add count(수량 증가)
         if (savedCartItem != null) {
             savedCartItem.addCount(cartItemDto.getCount());
             return savedCartItem.getId();
@@ -63,6 +66,7 @@ public class CartService {
         Member member = memberRepository.findByEmail(email);
         Cart cart = cartRepository.findByMemberId(member.getId());
         if(cart == null){
+            //아무 상품도 안담아서 cart가 null인경우 빈 cartDetailDtoList 반환
             return cartDetailDtoList;
         }
 
@@ -110,6 +114,7 @@ public class CartService {
             orderDtoList.add(orderDto);
         }
 
+        //주문한 상품들을 장바구니에서 제거
         Long orderId = orderService.orders(orderDtoList, email);
         for(CartOrderDto cartOrderDto: cartOrderDtoList) {
             CartItem cartItem = cartItemRepository
